@@ -3,6 +3,10 @@ elasticsearch:
   command: elasticsearch -Des.network.host=0.0.0.0
   ports:
     - "9200:9200"
+  volumes_from:
+  - elkdata
+  # we need this name for the hardcoded server name in the logstash.confx
+  container_name: elasticsearch
 logstash:
   image: logstash:latest
   command: logstash -f /etc/logstash/conf.d/logstash.conf
@@ -20,3 +24,10 @@ kibana:
     - "5601:5601"
   links:
     - elasticsearch
+elkdata:
+  image: busybox
+  volumes:
+#        - /path/to/storage:/usr/share/elasticsearch/data
+  - /usr/share/elasticsearch/data
+
+
