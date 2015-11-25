@@ -16,6 +16,9 @@ logstash:
     - /home/ec2-user/ssl:/ssl-conf
   ports:
     - "5000:5000"
+    - "5044:5044"
+    - "5043:5043"
+    - "6043:6043"
   links:
     - elasticsearch
 kibana:
