@@ -4,9 +4,13 @@ elasticsearch:
   ports:
     - "9200:9200"
   volumes_from:
-  - elkdata
+  - elkdat
   # we need this name for the hardcoded server name in the logstash.confx
   container_name: elasticsearch
+  log_driver: "json-file"
+  log_opt:
+    max-size: "100k"
+    max-file: "20"
 logstash:
 #  build: logstash/
   image: logstash:latest
@@ -29,7 +33,7 @@ kibana:
     - "5601:5601"
   links:
     - elasticsearch
-elkdata:
+elkdat:
   image: busybox
   volumes:
 #        - /path/to/storage:/usr/share/elasticsearch/data
